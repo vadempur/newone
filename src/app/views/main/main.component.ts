@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,7 +16,7 @@ private gridApi;
 private gridColumnApi;
 private paginationPageSize;
 private paginationNumberFormatter;
-
+@ViewChild('pagesize')pagesize:ElementRef;
   constructor(private http: HttpClient) { }
   loginFormModalEmail = new FormControl('', Validators.email);
   loginFormModalPassword = new FormControl('', Validators.required);
@@ -28,45 +28,52 @@ private paginationNumberFormatter;
 
               ngOnInit() {
                 this.colDefs= [{
-                    headerName:"name",
+                    headerName:"Name",
                     field:"athlete",
-                    width:150
+                   
                 },
                 {
                   headerName:"age",
                   field:"age",
-                  width:150
+                 
               },
               {
                 headerName:"year",
                 field:"year",
-                width:190
+              
             },
             {
               headerName:"sport",
               field:"sport",
-              width:210
+              
           },
           {
             headerName:"gold",
             field:"gold",
-            width:210
+           
         },
         {
-          headerName:"country",
-          field:"country",
-          width:210
-      },
-      {
-        headerName:"silver",
-        field:"silver",
-        width:210
-    },
-    {
-      headerName:"bronze",
-      field:"bronze",
-      width:210
-  },
+          headerName:"view",
+          template:
+          `<button type="button" (click)="alerting()" data-action-type="remove"  class="btn btn-default update">
+             View
+           </button> 
+           
+           `,
+           suppressMenu: true,
+           suppressSorting: true,
+        },{
+          headerName:"Remove",
+          template:
+          `
+           
+           <button type="button" data-action-type="remove"  class="btn btn-default remove">
+           Remove
+           </button> `,
+           suppressMenu: true,
+           suppressSorting: true,
+        }
+    
           ];
 
           this.paginationPageSize = 10;
@@ -75,7 +82,11 @@ private paginationNumberFormatter;
           };
           
 
+
             } 
+            alerting(){
+              console.log('hai hello');
+            }
             onGridReady(params){
               this.gridApi=params.api;
               this.gridColumnApi=params.columnApi;
@@ -89,7 +100,17 @@ private paginationNumberFormatter;
              this.gridApi.setQuickFilter(this.searchValue);
             }
             onPageSizeChanged(newPageSize) {
-              var value = document.getElementById("page-size");
-              this.gridApi.paginationSetPageSize(Number(value));
+              // let value = document.getElementById("page-size").nodeValue;
+              let anothervalue=this.pagesize.nativeElement.value;
+              this.gridApi.paginationSetPageSize(Number(anothervalue));
             }
+            public onRowClicked(e) {
+            console.log(e.event.target.outerText);
+            if(e.event.target.outerText=="VIEW"){
+              alert("hai")
+            }else if(e.event.target.outerText=="REMOVE"){
+              alert("remove")
+            }
+          }
+        
           }

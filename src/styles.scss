@@ -1,3 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */$primary-color: #2196F3; // blue-500
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+$ag-icons-path: '~ag-grid-community/src/styles/icons/';
+$ag-mat-icons-path: '~ag-grid-community/src/styles/material-icons/';
+
+$grid-size: 4px; // 8 by default
+$icon-size: 12px; // 18 by default
+
+// Change the primary / accent colors
+$header-background-color:blue;
+
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material2.css";
+@import "../src/assets/css/material2.css";
